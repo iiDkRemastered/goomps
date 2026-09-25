@@ -10,7 +10,7 @@ This mod is fully legal and complies with the rules of Gorilla Tag.
 
 # Installation
 
-- Download the release from [here](https://github.com/iiDk-the-actual/GOOMPS/releases/latest)
+- Download the release from [here](https://github.com/iiDkRemastered/GOOMPS/releases/latest)
 - Drag the file `GOOMPS.dll` to your plugins folder
 - Start Gorilla Tag if needed
 
