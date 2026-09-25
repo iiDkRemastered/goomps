@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 namespace GOOMPS
@@ -23,8 +23,10 @@ namespace GOOMPS
 
 			_rig.mainSkin.enabled = _visible;
 			_rig.muted = Cfg.mute.Value && !_visible;
-			_rig.transform.Find("rig/body_pivot/gorillachest").gameObject.SetActive(_visible);
-			_rig.transform.Find("rig/head/gorillaface").gameObject.SetActive(_visible);
+			Transform chest = _rig.transform.Find("rig/body_pivot/gorillachest");
+			if (chest != null) chest.gameObject.SetActive(_visible);
+			Transform face = _rig.transform.Find("rig/head/gorillaface");
+			if (face != null) face.gameObject.SetActive(_visible);
 		}
 
 		private void OnTriggerEnter(Collider coll)
