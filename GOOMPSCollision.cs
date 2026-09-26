@@ -10,7 +10,7 @@ namespace GOOMPS
 			if (_rig == GorillaTagger.Instance.offlineVRRig)
 				return;
 
-			if (Cfg.audio.Value)
+			if (Cfg.audio.Value && !_visible) // Only play sound when they disappear
 			{
 				GorillaTagger instance = GorillaTagger.Instance;
 				if (instance != null)
@@ -21,24 +21,26 @@ namespace GOOMPS
 				}
 			}
 
-			_rig.mainSkin.enabled = _visible;
 			_rig.muted = Cfg.mute.Value && !_visible;
-			Transform chest = _rig.transform.Find("rig/body_pivot/gorillachest");
-			if (chest != null) chest.gameObject.SetActive(_visible);
-			Transform face = _rig.transform.Find("rig/head/gorillaface");
-			if (face != null) face.gameObject.SetActive(_visible);
+			
+			Renderer[] renderers = _rig.GetComponentsInChildren<Renderer>();
+			foreach (Renderer r in renderers)
+			{
+				r.forceRenderingOff = !_visible;
+				r.enabled = _visible;
+			}
 		}
 
 		private void OnTriggerEnter(Collider coll)
 		{
 			if (coll.name.Contains("Body"))
-				ChangePlayerVisibility(coll.transform.parent.parent.parent.parent.GetComponent<VRRig>(), false);
+				ChangePlayerVisibility(coll.GetComponentInParent<VRRig>(), false);
 		}
 
 		private void OnTriggerExit(Collider coll)
 		{
 			if (coll.name.Contains("Body"))
-				ChangePlayerVisibility(coll.transform.parent.parent.parent.parent.GetComponent<VRRig>(), true);
+				ChangePlayerVisibility(coll.GetComponentInParent<VRRig>(), true);
 		}
 	}
 }
